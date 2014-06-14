@@ -175,14 +175,11 @@ ul.inline {
 	margin: 1.5em 0;
 }
 
-header ul.inline, footer ul.inline {
-	float: right;
-}
-
 ul.inline li {
 	display: inline-block;
 	list-style-type: none;
-	margin-right: 3em;
+	margin-right: 1em;
+	padding: .5em;
 }
 
 ul.inline li:last-child {
@@ -234,4 +231,14 @@ nav.primary a:hover {
 
 .clear {
 	clear: both;
+}
+
+@media (min-width:40em) { /* applies when screen width >= 40em - these are not mobile styles */
+	ul.inline {
+		float: right;
+	}
+	
+	ul.inline li {
+		margin-right: 3em;
+	}
 }
