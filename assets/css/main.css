@@ -189,6 +189,11 @@ ul.inline li:last-child {
 	margin-right: 0;
 }
 
+nav.primary {
+	margin-top: 1em;
+	letter-spacing: 0.05em;
+}
+
 nav.primary a {
 	padding: .5em;
 	border-bottom: .3em solid #444;
