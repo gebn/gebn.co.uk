@@ -179,7 +179,6 @@ ul.inline li {
 	display: inline-block;
 	list-style-type: none;
 	margin-right: 1em;
-	padding: .5em;
 }
 
 ul.inline li:last-child {
@@ -203,30 +202,36 @@ nav.primary a:hover {
 .wrap {
 	margin: 0 auto;
 	padding: 0.5em 5%;
-	max-width: 70rem;
+	max-width: 75rem;
 	position: relative;
 }
 
-#welcome {
-	margin: 0 auto;
-	padding: 7em 1em;
-	width: 80%;
+#home .wrap {
+	padding: 0 5%;
 }
 
-.profile {
-	margin-left: 5em;
-	float: right;
-	border: .3em solid #444;
-	
-	-webkit-box-shadow: #B3B3B3 3px 3px 3px;
-	-moz-box-shadow: #B3B3B3 3px 3px 3px;
-	box-shadow: #B3B3B3 3px 3px 3px;
+#welcome {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#welcome h1 {
+	margin-top: 0;
 }
 
 .role {
 	color: #444;
 	font-size: 1.2em;
 	font-weight: lighter;
+}
+
+.profile {
+	border-left: .3em solid #555;
+	float: right;
+}
+
+#welcome, .profile {
+	height: 60vh;
 }
 
 .clear {
