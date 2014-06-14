@@ -153,7 +153,7 @@ main {
 }
 
 h1 {
-	font-size: 4em;
+	font-size: 2em;
 	margin: .4em 0;
 	font-weight: 200;
 }
@@ -204,6 +204,7 @@ nav.primary a:hover {
 	padding: 0.5em 5%;
 	max-width: 75rem;
 	position: relative;
+	height: 100%;
 }
 
 #home .wrap {
@@ -213,6 +214,7 @@ nav.primary a:hover {
 #welcome {
 	display: table-cell;
 	vertical-align: middle;
+	padding-right: 2em;
 }
 
 #welcome h1 {
@@ -228,6 +230,7 @@ nav.primary a:hover {
 .profile {
 	border-left: .3em solid #555;
 	float: right;
+	display: none;
 }
 
 #welcome, .profile {
@@ -238,12 +241,49 @@ nav.primary a:hover {
 	clear: both;
 }
 
-@media (min-width:40em) { /* applies when screen width >= 40em - these are not mobile styles */
+@media (min-width: 40em) { /* applies when screen width >= 40em - these are not mobile styles */
 	ul.inline {
 		float: right;
 	}
 	
 	ul.inline li {
 		margin-right: 3em;
+	}
+}
+
+@media (min-width: 60em) { /* applies when screen width >= 60em */
+	.profile {
+		display: block;
+	}
+	
+	h1 {
+		font-size: 4em;
+	}
+}
+
+@media (max-width: 60em) {
+
+	#home .wrap {
+		padding: 0;
+		margin: 0;
+	}
+
+	#home {
+		background: url(../img/profile.jpg);
+		background-position: center center;
+		background-size: cover;
+		width: 100%;
+		height: 50vh;
+	}
+
+	#welcome {
+		background: rgba(255,255,255,0.5);
+		padding: 1em;
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: auto;
+		display: block;
+		box-sizing: border-box;
 	}
 }
