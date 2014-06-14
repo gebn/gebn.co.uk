@@ -28,7 +28,7 @@ body {
 	font-size: 16px;
 	line-height: 1;
 	font-family: "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	color: #222;
+	color: #fff;
 	background-color: #333;
 }
 
@@ -138,11 +138,6 @@ table {
 	font-style: italic;
 }
 
-header, footer {
-	background-color: #333;
-	color: #fff;
-}
-
 header {
 	border-bottom: .3em solid #555;
 }
@@ -153,6 +148,7 @@ footer {
 }
 
 main {
+	color: #222;
 	background-color: #eee;
 }
 
