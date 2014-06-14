@@ -25,7 +25,7 @@ footer, header, hgroup, menu, nav, section, main {
 }
 
 body {
-	font-size: 16px;
+	font-size: 18px;
 	line-height: 1;
 	font-family: "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #fff;
@@ -144,7 +144,7 @@ header {
 
 footer {
 	border-top: .5em solid #555;
-	font-size:0.9em;
+	font-size:0.85em;
 }
 
 main {
@@ -153,7 +153,7 @@ main {
 }
 
 h1 {
-	font-size: 4em;
+	font-size: 3.6em;
 	margin: .4em 0;
 	font-weight: lighter;
 }
@@ -241,7 +241,7 @@ a:hover, a:active {
 
 .role {
 	color: #444;
-	font-size: 1.2em;
+	font-size: 1.1em;
 	font-weight: lighter;
 }
 
