@@ -167,10 +167,6 @@ a:link, a:visited {
 	text-decoration: none;
 }
 
-a:hover, a:active {
-	/*text-decoration: underline;*/
-}
-
 ul.inline {
 	margin: 1.5em 0;
 }
