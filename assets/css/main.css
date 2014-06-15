@@ -168,7 +168,7 @@ a:link, a:visited {
 }
 
 ul.inline {
-	margin: 1.5em 0;
+	margin: 1em 0;
 }
 
 ul.inline li {
@@ -179,11 +179,6 @@ ul.inline li {
 
 ul.inline li:last-child {
 	margin-right: 0;
-}
-
-nav.primary {
-	margin-top: 1em;
-	letter-spacing: 0.05em;
 }
 
 nav.primary a {
@@ -235,7 +230,11 @@ nav.primary a:hover {
 	clear: both;
 }
 
-@media (min-width: 40em) { /* applies when screen width >= 40em - these are not mobile styles */
+@media (min-width: 35em) { /* applies when screen width >= 35em - these are not mobile styles */
+	nav.primary {
+		margin: 2em 0 .5em 0;
+	}
+
 	ul.inline {
 		float: right;
 	}
