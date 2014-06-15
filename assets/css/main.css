@@ -168,13 +168,13 @@ a:link, a:visited {
 }
 
 ul.inline {
-	margin: 1em 0;
+	margin: .5em 0;
 }
 
 ul.inline li {
 	display: inline-block;
 	list-style-type: none;
-	margin-right: 1em;
+	margin: .5em;
 }
 
 ul.inline li:last-child {
