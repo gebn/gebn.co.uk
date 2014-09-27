@@ -244,13 +244,12 @@ nav.primary {
 
 .profile {
 	border-left: .3em solid #555;
-	float: right;
-	display: none;
 }
 
 	@media (min-width: 50em) {
 		.profile {
 			display: block;
+			float: right;
 		}
 	}
 
