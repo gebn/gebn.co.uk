@@ -49,8 +49,27 @@ table {
 	border-spacing: 0;
 }
 
-/* TODO: move @font-faces back into here when done (and minify) */
-/* how can you fade in content on page load? */
+@font-face {
+	font-family: 'Myriad Pro';
+	src: url('fonts/myriadpro-regular.eot');
+	src: url('fonts/myriadpro-regular.eot?#iefix') format('embedded-opentype'),
+		url('fonts/myriadpro-regular.woff') format('woff'),
+		url('fonts/myriadpro-regular.ttf') format('truetype'),
+		url('fonts/myriadpro-regular.svg#MyriadProRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Myriad Pro';
+	src: url('fonts/myriadpro-light.eot');
+	src: url('fonts/myriadpro-light.eot?#iefix') format('embedded-opentype'),
+		url('fonts/myriadpro-light.woff') format('woff'),
+		url('fonts/myriadpro-light.ttf') format('truetype'),
+		url('fonts/myriadpro-light.svg#MyriadProLight') format('svg');
+	font-weight: 200;
+	font-style: normal;
+}
 
 h1 {
 	margin: .4em 0;
