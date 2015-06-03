@@ -95,11 +95,11 @@ header {
 	border-bottom: .3em solid #555;
 }
 
-	#header-nav {
-		padding: 0;
-	}
-	
 	@media (min-width: 50em) {
+		header {
+			height: 10vh;
+		}
+
 		#header-intro {
 			display: none;
 		}
@@ -125,16 +125,6 @@ header p, footer p {
 	max-width: 75rem;
 }
 
-.tight { /* apply to .wrap elements that should be full width on mobile */
-	padding: 0;
-}
-
-	@media (min-width: 50em) {
-		.tight {
-			padding: .5em 5% !important; /* reset to default */
-		}
-	}
-
 ul.inline {
 	margin: 1em 0;
 	line-height: 2em;
@@ -157,61 +147,6 @@ ul.inline {
 		
 		footer ul.inline li {
 			margin-right: 2.5em;
-		}
-	}
-
-nav.primary {
-	font-size: 1.1em;
-}
-
-	nav.primary a {
-		padding: 1em 1.5em;
-		display: block;
-		text-align: center;
-		text-transform: lowercase;
-	}
-	
-	#nav-home {
-		background-color: #555;
-	}
-	
-	#nav-about {
-		background-color: #666;
-	}
-	
-	#nav-portfolio {
-		background-color: #777;
-	}
-	
-	@media (min-width: 50em) {
-		/* here we're basically turning the ul inside nav.primary into ul.inline (with a few alterations) */
-		nav.primary {
-			float: right;
-			margin: 2em 0 1em 0;
-		}
-		
-			nav.primary li {
-				display: inline-block;
-				list-style-type: none;
-				margin-right: 1.5em;
-			}
-			
-				nav.primary li:last-child {
-					margin-right: 0;
-				}
-			
-			nav.primary a {
-				padding: .5em;
-				border-bottom: .3em solid #444;
-				text-align: inherit;
-			}
-			
-				nav.primary a:active, nav.primary a:hover {
-					border-bottom-color: #555;
-				}
-		
-		#nav-home, #nav-about, #nav-portfolio {
-			background-color: inherit;
 		}
 	}
 
