@@ -1,0 +1,67 @@
+==================================================================
+https://keybase.io/gebn
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://gebn.co.uk
+  * I am gebn (https://keybase.io/gebn) on keybase.
+  * I have a public key with fingerprint 4D27 2218 5E4C FEA6 2BC2  6A6B 05C6 61B3 652F 9D33
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "4d2722185e4cfea62bc26a6b05c661b3652f9d33",
+            "host": "keybase.io",
+            "key_id": "05c661b3652f9d33",
+            "kid": "0101aefd5e00f34ccb81c53ea8d2712ef0166ccda2437ea70eca64d95826556e789b0a",
+            "uid": "0a6231c17f0e1bece4f71147e5e53119",
+            "username": "gebn"
+        },
+        "service": {
+            "hostname": "gebn.co.uk",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1433289258,
+    "expire_in": 157680000,
+    "prev": "7ba0b5c844f0f9872e44eacaa523e68d7028285eb499a253bd8ae383cf57879b",
+    "seqno": 16,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.8
+Comment: https://keybase.io/crypto
+
+yMIbAnicbZJbSBRRGMd3tSS37EoPPWgxVJYuy8yZ25mlIAq6CBUIS1HWds6ZMzqa
+M+vs7JaYRT30UD0VRVt2gRC7sGgXKgOh1dQsejAwBKnohhqJUS/ddDvTBXrovBzO
+//t/v+/7zjkPCnJ9Af+BezAyJbu01v84syLhi1irSxo4bOv1XLiBq6G/NsO0KqkT
+c0zL5cKcpAMVAAHKVCIGRQrABChIwbxMFEXAoiIDQ9NFkQtyVXbcy2AYjOI0ZNpM
+Y4eoqTP1P/6a3wGBFxA1dJnyvCFKhGAoEFmkCLLKAqAGLygKIToCkqhSpPKUIEXS
+NRkCRZYVqkIN84jhEr9xrEVRIIJq8FTAlFDJUAVBUqlMZVEQNM8Yp46FailzV1Js
+cY1BjilJk1BvfG+Kf6IhYocSNSwr5tiuTezdTK9y3Vg87OW59THPuIfi6B9EFJuW
+zm6QZSSpEzdtiwsLzElc02MKkigCqAEZBjm6N2Y6NGp6DllVIM+WV4cmGVLFiMcy
+gZJk8IYGVUAliSKCkAxEqkBd5QEE7FWwpGkIyCLWIaIiFIkhq1DVMOcNVWfZjK2w
+PlElY8bNSgu5CYdyjZ33K6b4/AFf3tQc7xP4Avmz/36NQ+Y0X+eHkS1VN9smiqeX
+Llpf4BSkJq4/zlmT635qQkt6OuZs3tvFV5RHj50Iziy7Pbzu7PKT8/a73R3ujPRo
+8OC+U/hOy0MQ6Su8tLj6ek57R/Y5LBndNOm0Hjhztr/EfnL5/MZX4ZPnUn1Pj2aq
+Z71eGUl+5fsHYE/zhmFS3PWhuNe/c2hoeHzW97HVZW2J3ExRfmFf89sn3XXv5h5N
+Hxm81XimLHJ87Fa6Z9OL9snQ4l1ftMJs+7X6wIKraHh/6+k3X/OuXhn4PPHt8Pb3
+gbUftzbNz06MvExNz5ywHqUX1q7Ud1zYcvxHRe8NdBptLHrbefHZ4Lbxu6jNV7oq
+ldeSLf84d9mMn3vzLAU=
+=xi83
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/gebn
+
+==================================================================
