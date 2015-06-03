@@ -198,6 +198,7 @@ ul.inline {
 
 .profile {
 	border-left: .3em solid #555;
+	min-height: 163px;
 }
 
 	@media (min-width: 50em) {
