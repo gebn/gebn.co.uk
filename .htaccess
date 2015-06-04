@@ -1,0 +1,31 @@
+SetEnvIfNoCase User-Agent "Yandex|Baidu" bad_bot
+Order Deny,Allow
+Deny from env=bad_bot
+
+# deny access to git
+RedirectMatch 404 /\.git
+
+RewriteEngine On
+
+# always use SSL
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://gebn.co.uk/$1 [R,L]
+
+# redirect 404s to homepage
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . / [L,R=301]
+
+# parked domain redirects and strip www. prefix
+RewriteCond %{HTTP_HOST} ^www\.gebn\.co\.uk$ [OR]
+RewriteCond %{HTTP_HOST} ^gebn\.net$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.gebn\.net$ [OR]
+RewriteCond %{HTTP_HOST} ^gebn\.uk$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.gebn\.uk$ [OR]
+RewriteCond %{HTTP_HOST} ^george\-brighton\.co\.uk$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.george\-brighton\.co\.uk$ [OR]
+RewriteCond %{HTTP_HOST} ^thebrightons\.uk$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.thebrightons\.uk$
+RewriteCond %{HTTP_HOST} ^georgebrighton\.co\.uk$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.georgebrighton\.co\.uk$
+RewriteRule ^/?$ "https\:\/\/gebn\.co\.uk" [R=301,L]
