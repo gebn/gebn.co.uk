@@ -25,7 +25,7 @@ RewriteCond %{HTTP_HOST} ^www\.gebn\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^george\-brighton\.co\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.george\-brighton\.co\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^thebrightons\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.thebrightons\.uk$
+RewriteCond %{HTTP_HOST} ^www\.thebrightons\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^georgebrighton\.co\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.georgebrighton\.co\.uk$
 RewriteRule ^/?$ "https\:\/\/gebn\.co\.uk" [R=301,L]
