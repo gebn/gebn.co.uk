@@ -82,7 +82,7 @@
 						<a href="https://keybase.io/gebn">Keybase</a>
 					</li>
 					<li>
-						<a href="mailto:&#104;&#105;&#064;&#103;&#101;&#098;&#110;&#046;&#099;&#111;&#046;&#117;&#107;">Email</a>
+						<a id="email" href="#">Email</a>
 					</li>
 					<li>
 						<a href="/GeorgeBrighton.pdf">CV</a>
@@ -91,5 +91,13 @@
 				<div class="clear"></div>
 			</div>
 		</footer>
+		<script>
+			String.prototype.reverse = function() {
+				return this.split('').reverse().join('');
+			}
+
+			var a = 'nbeg', b = '.co.uk', c = 'ih';
+			document.getElementById('email').setAttribute('href', 'mailto:' + c.reverse() + '@' + a.reverse() + b);
+		</script>
 	</body>
 </html>
