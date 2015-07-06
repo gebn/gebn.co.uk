@@ -91,6 +91,11 @@ a:link, a:visited {
 	text-decoration: none;
 }
 
+a:hover, a:active {
+	color: #fff;
+	text-decoration: none;
+}
+
 header {
 	border-bottom: .3em solid #555;
 }
@@ -128,6 +133,7 @@ header p, footer p {
 ul.inline {
 	margin: 1em 0;
 	line-height: 2em;
+	color: #bbb;
 }
 
 	ul.inline li {
