@@ -7,8 +7,11 @@ RedirectMatch 404 /\.git
 
 RewriteEngine On
 
-# always use SSL
+# always use SSL (except for GS clients)
 RewriteCond %{SERVER_PORT} 80
+RewriteCond %{REMOTE_ADDR} !^204\.4\.1[2-9]
+RewriteCond %{REMOTE_ADDR} !^154\.4\.
+RewriteCond %{REMOTE_ADDR} !^198.242.1[2-9]
 RewriteRule ^(.*)$ https://gebn.co.uk/$1 [R,L]
 
 # redirect 404s to homepage
