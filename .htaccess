@@ -21,8 +21,6 @@ RewriteRule . / [L,R=301]
 
 # parked domain redirects and strip www. prefix
 RewriteCond %{HTTP_HOST} ^www\.gebn\.co\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^gebn\.net$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.gebn\.net$ [OR]
 RewriteCond %{HTTP_HOST} ^gebn\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.gebn\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^george\-brighton\.co\.uk$ [OR]
