@@ -19,14 +19,17 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . / [L,R=301]
 
-# parked domain redirects and strip www. prefix
+# redirect www. and alias domain names for gebn.co.uk
 RewriteCond %{HTTP_HOST} ^www\.gebn\.co\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^gebn\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.gebn\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^george\-brighton\.co\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.george\-brighton\.co\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^thebrightons\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.thebrightons\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^georgebrighton\.co\.uk$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.georgebrighton\.co\.uk$
 RewriteRule ^/?$ "https\:\/\/gebn\.co\.uk" [R=301,L]
+
+# redirect www. and alias domain names for thebrightons.co.uk
+RewriteCond %{HTTP_HOST} ^thebrightons\.uk$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.thebrightons\.uk$
+RewriteRule ^/?$ "http\:\/\/thebrightons\.co\.uk" [R=301,L]
