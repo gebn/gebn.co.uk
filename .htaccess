@@ -7,29 +7,34 @@ RedirectMatch 404 /\.git
 
 RewriteEngine On
 
-# always use SSL (except for GS clients)
-RewriteCond %{SERVER_PORT} 80
-RewriteCond %{REMOTE_ADDR} !^204\.4\.1[2-9]
-RewriteCond %{REMOTE_ADDR} !^154\.4\.
-RewriteCond %{REMOTE_ADDR} !^198.242.1[2-9]
-RewriteRule ^(.*)$ https://gebn.co.uk/$1 [R,L]
+# get protocol in ${ENV:proto} - http://stackoverflow.com/a/20419821/2765666
+RewriteCond %{HTTP:CF-Visitor} '"scheme":"http"' [OR]
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ - [env=proto:http]
+RewriteCond %{HTTP:CF-Visitor} '"scheme":"https"' [OR]
+RewriteCond %{HTTPS} =on
+RewriteRule ^(.*)$ - [env=proto:https]
 
-# redirect 404s to homepage
+# redirect thebrightons.uk; this is an artefact of it being a cPanel alias
+# so it is handled by the primary virtual host
+RewriteCond %{HTTP_HOST} ^(?:www\.)?thebrightons\.uk$
+RewriteRule ^ %{ENV:proto}://thebrightons.co.uk%{REQUEST_URI} [QSA,R=301,L]
+
+# you need to be careful below to only change to SSL if the IP is not from GS - otherwise
+# you'll break 404s etc. for them
+
+# redirect domain aliases (we must do this immediately ([L]), as aliases do not have SSL certs)
+RewriteCond %{HTTP_HOST} !^gebn\.co\.uk$ [NC]
+RewriteRule ^ %{ENV:proto}://gebn.co.uk%{REQUEST_URI} [QSA,R=301,L]
+
+# redirect 404s to / (the trailing ? effectively discards the query string)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . / [L,R=301]
+RewriteRule ^ %{ENV:proto}://%{SERVER_NAME}? [R]
 
-# redirect www. and alias domain names for gebn.co.uk
-RewriteCond %{HTTP_HOST} ^www\.gebn\.co\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^gebn\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.gebn\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^george\-brighton\.co\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.george\-brighton\.co\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^georgebrighton\.co\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.georgebrighton\.co\.uk$
-RewriteRule ^/?$ "https\:\/\/gebn\.co\.uk" [R=301,L]
-
-# redirect www. and alias domain names for thebrightons.co.uk
-RewriteCond %{HTTP_HOST} ^thebrightons\.uk$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.thebrightons\.uk$
-RewriteRule ^/?$ "http\:\/\/thebrightons\.co\.uk" [R=301,L]
+# redirect insecure requests if they do not originate from GS
+RewriteCond %{ENV:proto} ^http$
+RewriteCond %{REMOTE_ADDR} !^204\.4\.1[2-9]
+RewriteCond %{REMOTE_ADDR} !^154\.4\.
+RewriteCond %{REMOTE_ADDR} !^198\.242\.1[2-9]
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [QSA,R=301]
