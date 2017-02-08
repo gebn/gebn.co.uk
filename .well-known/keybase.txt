@@ -1,0 +1,72 @@
+==================================================================
+https://keybase.io/gebn
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://gebn.co.uk
+  * I am gebn (https://keybase.io/gebn) on keybase.
+  * I have a public key with fingerprint E850 617E 852D B9CD 2018  B2F0 2B85 A437 DD4E 0240
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0101e1a22bd06085c28cfcc0f258d48889f6b168ef6ab7bc5a26ceaff97ec186f2830a",
+            "fingerprint": "e850617e852db9cd2018b2f02b85a437dd4e0240",
+            "host": "keybase.io",
+            "key_id": "2b85a437dd4e0240",
+            "kid": "0101e1a22bd06085c28cfcc0f258d48889f6b168ef6ab7bc5a26ceaff97ec186f2830a",
+            "uid": "0a6231c17f0e1bece4f71147e5e53119",
+            "username": "gebn"
+        },
+        "service": {
+            "hostname": "gebn.co.uk",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1486522292,
+    "expire_in": 157680000,
+    "prev": "ea86b06fd844b82e4787d0fce093b997ee861d0a674432e3b63bc924a5bd5c9c",
+    "seqno": 24,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+
+owGtUm1QVFUY3gU03MCgISUmkLkaTkF479n7cZaQinAcNFfIGQSB8H6cu1w+7l12
+F2yDzcEKBsgRKHXKAfqYZgwmw6ahERtBCZEPNTA+skZacUVTU0E2IYTutZrpRz87
+f94573me5zzPO29toK/OoL82P0uk3fdO6Puvc7r0DyuPl2KcIjixuFIsHz0sqEBA
+dkdOviRgcRhO4AQiWAA4AadxSPEA8iLP4yKgoEBCCE0izRE0RCLNcgzHUyygecSK
+oolBPAFpEUAjzmIxmCjJFmSz2iTZocoiSOE0wagFCJyJFwBOQA6IOOAgxZJGRhBI
+hAMSV4m5il1jqOY41o5iJUXtqZech/b+A/8/+y7+S46lgZHgCUbEEcEhHpEiQxAk
+gyhEGQnCpAHtyCazhUhFWxAnY64YTO2USDzShqql+NdrLK/EFuerLKtNcSi8UqD2
+cx0Oqz1O4zmcVg24C3E5f0vkcJIsqBNUGSXIZpcUGYsjVCTvkDRNgoQ0BQAwgRgM
+vW6VbChH0hAUQ0NcPdo/qESbOwtpDqdFAZIktw0CRDKQEXCRR7jJyJnU8AjShKDG
+ZUjSCJCRo40cbwIkS3ECxZt4TEtVJCtYHCBVo6xFFbVLFpl1FNsQ5jJU+Tzlp9Mb
+dEuX+GjLpTMsC/pn4+qDHluIzDy6xX9D2J7kNyaHpgNC3gmeNRee2Jt6oPzIAFUd
+9NWKxeSmBwUbj62cbLckJwQMNmU933qitys+7S3znRklqSiT+6wrNf4MTL054H4v
+8J7b8dGGilrTVPPA4sVyfebcb2RBfzlg1n1/fZ14MXw0onTzL1kZP9+66nyEHHI/
+l90rZzd7K8OrNqPjKY0da8ZfjRr2PTix1pl3BxxLjDajV+Y+ngqr4cuK/TzZL0WA
+abn1XlNodGj6hfPVfS/smTl7d9Pt80cbveu5Mc/y8eU/XJayIugWx0he0EJQfGhP
+921R58wU9t/wuj51283GZ8oaMtmtzYnWvK6+xQtb28d3uGKu1BGd5rpVGYejwxNG
+rmxPvt95MPXdP+wpStoBvsS5O9LR0+ge8zyaEFC7ZueXwNv+dFvHuYDdK08RRScp
+T4u/OHtoylVctvSLtpdNGRZlC1wSsq3+dF9fT/o3w72l8oqiM903w7bvtQ1WJRoO
+ZV++m1R4LX9u6NmajT4nJyqw4MpVV2vyPJ9E9oWNHPa8HxigH0374Gtbi/ym/77U
+bl/inHvYs6N67en04fmSpNEjDWN1T55a2NRQWLEM3dgZ9fbjP67OrQmONIR87r00
+3bBr1tDf6meJujTHpNSPnzU8+E4f0mF+8Ve5oi1ksvanmeCe16T5W/DbfU/st1lr
+/TsHf+9ZvxqW/Qk=
+=PmLX
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/gebn
+
+==================================================================
