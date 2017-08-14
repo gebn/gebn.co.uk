@@ -14,10 +14,11 @@ fi
 
 cd "$DIST_DIR"  # to avoid "../../../../../dev/shm/..." in the log
 aws s3 sync \
+    --delete \
     --metadata git-commit="${TRAVIS_COMMIT:0:7}" \
     --no-follow-symlinks \
     --region "$S3_REGION" \
+    --size-only  # otherwise all files will be uploaded every time
     --storage-class "$S3_STORAGE_CLASS" \
-    --delete \
     . "s3://$S3_BUCKET"
 cd "$SCRIPT_DIR"
