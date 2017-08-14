@@ -14,7 +14,6 @@ fi
 
 cd "$DIST_DIR"  # to avoid "../../../../../dev/shm/..." in the log
 aws s3 sync \
-    --dryrun \
     --metadata git-commit="${TRAVIS_COMMIT:0:7}" \
     --no-follow-symlinks \
     --region "$S3_REGION" \
