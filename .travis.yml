@@ -19,5 +19,4 @@ deploy:
   skip_cleanup: true
   file: /dev/shm/gebn.co.uk.tar.gz
   on:
-    repo: gebn/gebn.co.uk
     tags: true
