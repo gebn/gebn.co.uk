@@ -1,0 +1,22 @@
+#!/bin/bash
+
+trap 'exit' ERR
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$SCRIPT_DIR/variables"
+
+echo "Deploying ${DIST_NAME} to S3..."
+
+if [[ ! -d $DIST_DIR ]]; then
+    echo "Distribution directory does not exist" >&2
+    exit 1
+fi
+
+aws s3 sync \
+    --dryrun \
+    --metadata git-commit="${TRAVIS_COMMIT:0:7}" \
+    --no-follow-symlinks \
+    --region "$S3_REGION" \
+    --storage-class "$S3_STORAGE_CLASS" \
+    --delete \
+    "$DIST_DIR" "s3://$S3_BUCKET"

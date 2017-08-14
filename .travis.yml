@@ -1,5 +1,7 @@
 sudo: false
-language: generic
+language: python
+cache: pip
+python: 3.6
 env:
   global:
   - secure: RV2Q8WBGQhlfEeaLYLxfs/DZ5i9CPCXcW4GK0V+PaZRY4NMxZwDqgQ5NFMPJxjqPU86/Z4ZM+eyYFxbWYplUCfQEuExK7LQj4PjN95/cUadqfkS9+2Q9NKO0Ib6OlSkrb+cj+XjrGHl89EIJHCUkvqtL9xd+yIWYKdLKVIAcHZgNtTYWxADcs+5Ew2LU3lAAPiBUDPd+Ea/X4e2X2lwSYffzxiYbOz/AyYUJksxVE2BndwbrhXgjQ4JO+3PhtRD9+PrnWoL6PRN7stj/vQb/MTTukcLGRfBzZ8H8pjNkiKDyaqRM6r9giwGCJwyGucg3SWeqCPs7F29UVWQ6O9PaMpcez8pXLBfdWkgCWCYLhmL0G+pOZDeaNd5ldBt1EyZ32jXy42nSmQU6wM2Grwvd6W4/oGr8LU6K0io+tF25U07s0Ugt0d4WgzbyjsXkvfB0HRUYvHQ2FjcVoxqikx5Xq96Q9KVlOtHWg9B9FVgZvrhj4QyLorYOp2Eq2nAmV3HvxNNKKCCtyPmzZfYCZLgiQ9iRLYCuxHfuJOlfrWcnitWoT4jp1yaxvUh/XFTDd/hdWAmTcUfGUlaayPE0GwcC131mqe4JVnWjg44tepIXTDneeShOcnrOTqaE1b+VMQ4XD+zrZhISitQyU0lfVuqZSFo/Yj4Q5zGYL8mohdnO6cM=
@@ -7,11 +9,16 @@ env:
 script:
 - ./scripts/build
 deploy:
-  provider: releases
+- provider: script
+  script: ./scripts/deploy
+  on:
+    repo: gebn/gebn.co.uk
+    tags: true
+- provider: releases
   api_key:
     secure: KBrboqF3hVfcwxDmr/WdRyoD0Qqm3AwxvyUDX7CJuDecAVzZy0T+1pa84BZqIFSNhAS0Q/xVt9MeWziJJT1wc7Emj2991udfhFYR/5jmXvETNZwAnLmucY/xkCs31Xc35p8sI+PS2wb44yO8RMFdnac6WlEviLkaKlYx6u6jpnoIco+KW8yNusUiUcGJsA61NC7l1T0ALnK03eMIrIVCq5rWAk/ow0vJ7BOiGakGYBiO613RffFDO/1PPd1eGIF5aASniVuJKG8fRZ8rQZWYA8kQ16gHauZ/KarXpSTv67dVFTMflXZV2mWWP3+RQaFSRmPq0M/O6AYM+RpD6Ex5tOJxM4S1CoKsuxFYmtpDi58uudSAhAiAleO4mOh7m8RcR+XbJTKiUoBcC8NFvsj29bHklKNwdfwGq6JjiawN9mN0rCyV/2IjOk+0jbyaHAgf3A+9L/L7C10iz0jMeCs5BoflvOCn37udEvbB9BzySH2zMvCJff+lDvSf/pXsOS4KQn3NqbV3FNY++PFD4vp/KbKSsmrmE0Q8LcXA7/9IthOmaqzFw95NvHhcbEvOk5XFG+HLwXQ2vKcYMCUoc1ARom20VEllGV96WlX2Pje6dKsDO9SQSML0cuqVw2pQuxeWleWzjakd7Qx1uNdL63ua8Sapvt927eLcDFfyXepkCsQ=
   skip_cleanup: true
-  file: gebn.co.uk.tar.gz
+  file: /dev/shm/gebn.co.uk.tar.gz
   on:
     repo: gebn/gebn.co.uk
     tags: true
