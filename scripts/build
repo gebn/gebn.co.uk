@@ -1,0 +1,24 @@
+#!/bin/bash
+
+trap 'exit' ERR
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$SCRIPT_DIR/variables"
+
+echo "Building ${DIST_NAME}..."
+
+if [[ -d $DIST_DIR ]]; then
+    echo "Distribution directory already exists" >&2
+    exit 1
+fi
+
+mkdir "$DIST_DIR"
+
+# create the directory that could be deployed
+rsync -a --exclude '*.psd' --prune-empty-dirs "$WEBSITE_DIR/" "$DIST_DIR"
+# TODO minify CSS and HTML (#2)
+echo "Distribution created in $DIST_DIR"
+
+# create a distribution archive for GitHub in case we're building a tag
+GZIP=-9 tar -czf "$DIST_ARCHIVE" -C "$WEBSITE_DIR" .
+echo "Distribution archive created at $DIST_ARCHIVE"

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+readonly WEBSITE_DIR="$SCRIPT_DIR/../website"
+readonly TEMP_DIR="/dev/shm"
+readonly DIST_NAME="gebn.co.uk"
+readonly DIST_DIR="$TEMP_DIR/$DIST_NAME"
+readonly DIST_ARCHIVE="${DIST_DIR}.tar.gz"  # must match .travis.ci
+
+readonly S3_BUCKET="$DIST_NAME"
+readonly S3_REGION="eu-west-1"
+readonly S3_STORAGE_CLASS="STANDARD"
