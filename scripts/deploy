@@ -13,6 +13,8 @@ if [[ ! -d $DIST_DIR ]]; then
 fi
 
 cd "$DIST_DIR"  # to avoid "../../../../../dev/shm/..." in the log
+# TODO do not depend on sizes being different - make timestamps work.
+#      can you do a diff with the old live code and upload the changes?
 aws s3 sync \
     --delete \
     --metadata git-commit="${TRAVIS_COMMIT:0:7}" \
@@ -22,3 +24,11 @@ aws s3 sync \
     --storage-class "$S3_STORAGE_CLASS" \
     . "s3://$S3_BUCKET"
 cd "$SCRIPT_DIR"
+
+# TODO only invalidate changed files (related to TODO above) (#3)
+aws configure set preview.cloudfront true
+aws cloudfront create-invalidation \
+    --distribution-id "$CLOUDFRONT_DISTRIBUTION" \
+    --paths "/*"
+
+# TODO flush Cloudflare's cache if necessary (#3)
