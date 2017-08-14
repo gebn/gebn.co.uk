@@ -6,8 +6,6 @@ env:
   - secure: suptwYQF1ONg2VDYxSeMO/jQmHDsSfIqhfxuzM/jmcwt9lL38gOxb5hKnL+26nExyQCgN/jHiGNrL2xmZyqOjbbkJNsV1NtoBPQvYKFjKd9WIfHJCmhpxvdijTMqV0xrJwMTa8P6a49K5qR2FpAGql21lTbRdKibpPkmw7vLvx73LKW5rnd88YLeOoJWtyfHfbBqM7OLSkYLiIMoOWeKbVd8VLTJO/QnyTqKR+EwN5cSiNpWPMRB6PeXjImIJzX/WLor+cgGmfZIbOpRfRhktTpxjeFOOgBXfqG4ewub6ouDLElWGX1oaBV8jnLORbZm01M3NS3px7GNqPR05jg5S7FaGonjDtYypMaQuSFWPNQqFCvTBO/3ycAb2+LPL8/fo3X4kXt0Ns5Sn6X2YE8kc7aUKJe0i2r5fMJDBYwaDncX2JZZhygcD/gB9RPq4jzqijPF+2JDX/GxhL3MHBaS0LY/zekACLtG1b+CxwKdlpD7iwJ1EwMgRnHMzM8OVg2/W/64FgUjFNtnHf9Yc4V9gVpmI/4nsGpWpUEvvkPD/0ivBu3DV/FZC2Pv1FqloP43gNndWLMyQEtQq3VnA404ZVZoxx2Btj6ZFjCbDdyyeLd+8uTQEpmFS1vJ7gfUVP36M+r+Jszm3cxHcUuZ5WkTeZGJOi56Nz4q2F/kGLpdhiY=
 script:
 - ./scripts/build
-- ls -lh /dev/shm/gebn.co.uk
-- du -sh /dev/shm/gebn.co.uk
 deploy:
   provider: releases
   api_key:
