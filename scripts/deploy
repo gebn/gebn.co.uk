@@ -12,6 +12,7 @@ if [[ ! -d $DIST_DIR ]]; then
     exit 1
 fi
 
+cd "$DIST_DIR"  # to avoid "../../../../../dev/shm/..." in the log
 aws s3 sync \
     --dryrun \
     --metadata git-commit="${TRAVIS_COMMIT:0:7}" \
@@ -19,4 +20,5 @@ aws s3 sync \
     --region "$S3_REGION" \
     --storage-class "$S3_STORAGE_CLASS" \
     --delete \
-    "$DIST_DIR" "s3://$S3_BUCKET"
+    . "s3://$S3_BUCKET"
+cd "$SCRIPT_DIR"
