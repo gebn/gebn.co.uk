@@ -2,6 +2,10 @@ sudo: false
 language: python
 cache: pip
 python: 3.6
+before_script:
+- node --version
+- npm install html-minifier clean-css-cli
+- npm install -g html-minifier clean-css-cli
 script:
 - ./scripts/build
 deploy:
