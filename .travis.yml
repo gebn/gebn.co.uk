@@ -3,8 +3,6 @@ language: python
 cache: pip
 python: 3.6
 before_script:
-- node --version
-- npm install html-minifier clean-css-cli
 - npm install -g html-minifier clean-css-cli
 script:
 - ./scripts/build
@@ -20,3 +18,6 @@ deploy:
   file: /dev/shm/gebn.co.uk.tar.gz
   on:
     tags: true
+after_script:
+- cat /dev/shm/gebn.co.uk/assets/index.xhtml
+- cat /dev/shm/gebn.co.uk/assets/css/main.css

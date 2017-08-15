@@ -5,6 +5,31 @@ trap 'exit' ERR
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$SCRIPT_DIR/variables"
 
+function minify_html {
+    local file="$1"
+    echo "Minifying $file..."
+    html-minifier \
+        --decode-entities \
+        --html5 \
+        --keep-closing-slash \
+        --minify-css \
+        --minify-js \
+        --remove-comments \
+        --remove-redundant-attributes \
+        --collapse-whitespace \
+        --output "$file" \
+        "$file"
+}
+export -f minify_html
+
+function minify_css {
+    local file="$1"
+    echo "Minifying $file..."
+    cleancss --output "$file" "$file"
+}
+export -f minify_css
+
+
 echo "Building ${DIST_NAME}..."
 
 if [[ -d $DIST_DIR ]]; then
@@ -16,7 +41,11 @@ mkdir "$DIST_DIR"
 
 # create the directory that could be deployed
 rsync -a --exclude '*.psd' --prune-empty-dirs "$WEBSITE_DIR/" "$DIST_DIR"
-# TODO minify CSS and HTML (#2)
+
+# minify
+find "$DIST_DIR" -type f -name '*.html' -o -name '*.xhtml' -exec bash -c 'minify_html "$0"' {} \;
+find "$DIST_DIR" -type f -name '*.css' -exec bash -c 'minify_css "$0"' {} \;
+
 echo "Distribution created in $DIST_DIR"
 
 # create a distribution archive for GitHub in case we're building a tag
