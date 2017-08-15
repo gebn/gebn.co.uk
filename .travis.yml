@@ -18,6 +18,3 @@ deploy:
   file: /dev/shm/gebn.co.uk.tar.gz
   on:
     tags: true
-after_script:
-- cat /dev/shm/gebn.co.uk/index.xhtml
-- cat /dev/shm/gebn.co.uk/assets/css/main.css
