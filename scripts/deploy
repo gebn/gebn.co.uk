@@ -25,10 +25,17 @@ aws s3 sync \
     . "s3://$S3_BUCKET"
 cd "$SCRIPT_DIR"
 
-# TODO only invalidate changed files (related to TODO above) (#3)
+# TODO only invalidate changed files below (related to TODO above) (#3)
+
+# flush CloudFront's cache
 aws configure set preview.cloudfront true
 aws cloudfront create-invalidation \
     --distribution-id "$CLOUDFRONT_DISTRIBUTION" \
     --paths "/*"
 
-# TODO flush Cloudflare's cache if necessary (#3)
+# flush Cloudflare's cache
+curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
+     -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+     -H "X-Auth-Key: $CLOUDFLARE_KEY" \
+     -H "Content-Type: application/json" \
+     --data '{"purge_everything":true}'
