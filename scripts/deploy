@@ -20,7 +20,7 @@ aws s3 sync \
     --metadata git-commit="${TRAVIS_COMMIT:0:7}" \
     --no-follow-symlinks \
     --region "$S3_REGION" \
-    --size-only  # otherwise all files will be uploaded every time
+    --size-only \
     --storage-class "$S3_STORAGE_CLASS" \
     . "s3://$S3_BUCKET"
 cd "$SCRIPT_DIR"
