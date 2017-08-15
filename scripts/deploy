@@ -25,7 +25,7 @@ aws s3 sync \
     . "s3://$S3_BUCKET"
 cd "$SCRIPT_DIR"
 
-# TODO only invalidate changed files below (related to TODO above) (#3)
+# TODO only invalidate changed files below (related to TODO above) (#5)
 
 # flush CloudFront's cache
 aws configure set preview.cloudfront true
