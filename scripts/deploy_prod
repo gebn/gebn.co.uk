@@ -1,31 +1,33 @@
 #!/bin/bash
+# Deploy this website to production
 
 trap 'exit' ERR
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$SCRIPT_DIR/variables"
 
-echo "Deploying ${DIST_NAME} to S3..."
+if [[ -z $TRAVIS_TAG ]]; then
+    echo "Only tags will be deployed to production" >&2
+    exit 1
+fi
 
 if [[ ! -d $DIST_DIR ]]; then
     echo "Distribution directory does not exist" >&2
     exit 1
 fi
 
+echo "Deploying $DOMAIN:$TRAVIS_TAG to production..."
+
 cd "$DIST_DIR"  # to avoid "../../../../../dev/shm/..." in the log
-# TODO do not depend on sizes being different - make timestamps work.
-#      can you do a diff with the old live code and upload the changes?
 aws s3 sync \
     --delete \
-    --metadata git-commit="${TRAVIS_COMMIT:0:7}" \
+    --metadata commit="${TRAVIS_COMMIT:0:7}",version="$TRAVIS_TAG" \
     --no-follow-symlinks \
     --region "$S3_REGION" \
     --size-only \
     --storage-class "$S3_STORAGE_CLASS" \
-    . "s3://$S3_BUCKET"
+    . "s3://$S3_PROD_BUCKET"
 cd "$SCRIPT_DIR"
-
-# TODO only invalidate changed files below (related to TODO above) (#5)
 
 # flush CloudFront's cache
 aws configure set preview.cloudfront true
@@ -39,3 +41,5 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/p
      -H "X-Auth-Key: $CLOUDFLARE_KEY" \
      -H "Content-Type: application/json" \
      --data '{"purge_everything":true}'
+
+# Travis takes care of uploading the $DIST_ARCHIVE to the GitHub release

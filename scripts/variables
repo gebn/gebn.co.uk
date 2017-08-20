@@ -8,6 +8,6 @@ readonly DIST_NAME="$DOMAIN"
 readonly DIST_DIR="$TEMP_DIR/$DIST_NAME"
 readonly DIST_ARCHIVE="${DIST_DIR}.tar.gz"  # must match .travis.ci
 
-readonly S3_BUCKET="$DOMAIN"
+readonly S3_PROD_BUCKET="$DOMAIN"
 readonly S3_REGION="eu-west-1"
 readonly S3_STORAGE_CLASS="STANDARD"
