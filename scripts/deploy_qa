@@ -23,3 +23,5 @@ aws s3 sync \
     --storage-class "$S3_STORAGE_CLASS" \
     . "s3://$S3_QA_BUCKET"
 cd "$SCRIPT_DIR"
+
+echo "Deployed to http://${S3_QA_BUCKET}.s3-website-${S3_REGION}.amazonaws.com"
