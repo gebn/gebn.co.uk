@@ -8,6 +8,11 @@ script:
 - ./scripts/build
 deploy:
 - provider: script
+  script: ./scripts/deploy_qa
+  on:
+    repo: gebn/gebn.co.uk
+    branch: qa
+- provider: script
   script: ./scripts/deploy_prod
   on:
     tags: true
