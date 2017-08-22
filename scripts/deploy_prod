@@ -23,7 +23,6 @@ aws s3 sync \
     --delete \
     --no-follow-symlinks \
     --region "$S3_REGION" \
-    --size-only \
     --storage-class "$S3_STORAGE_CLASS" \
     . "s3://$S3_PROD_BUCKET"
 cd "$SCRIPT_DIR"
