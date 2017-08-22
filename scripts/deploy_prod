@@ -21,7 +21,6 @@ echo "Deploying $DOMAIN:$TRAVIS_TAG to production..."
 cd "$DIST_DIR"  # to avoid "../../../../../dev/shm/..." in the log
 aws s3 sync \
     --delete \
-    --metadata commit="${TRAVIS_COMMIT:0:7}",version="$TRAVIS_TAG" \
     --no-follow-symlinks \
     --region "$S3_REGION" \
     --size-only \
