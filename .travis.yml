@@ -9,11 +9,13 @@ script:
 deploy:
 - provider: script
   script: ./scripts/deploy/qa
+  skip_cleanup: true
   on:
     repo: gebn/gebn.co.uk
     branch: qa
 - provider: script
   script: ./scripts/deploy/prod
+  skip_cleanup: true
   on:
     tags: true
 - provider: releases
