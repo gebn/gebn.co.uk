@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import logging
+import sys
+import os
+
+import boto3
+import requests
+
+import config
+import s3
+from cloudflare import CloudflareInvalidator
+from cloudfront import CloudFrontInvalidator
+from comparison import DirectoryComparison
+from entities import Root
+from s3 import S3Syncer
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+logging.getLogger('botocore').setLevel(logging.WARNING)
+
+# TODO CHANGE RUN CONFIG BEFORE EXECUTING!!!
+
+s3_resource = boto3.resource('s3')
+
+# create a local tree representation
+local_root = Root.from_path(config.DIST_DIR)
+
+# create a remote tree representation
+bucket = s3_resource.Bucket(config.S3_PROD_BUCKET)
+objects = bucket.objects.all()
+remote_root = s3.objects_to_root(objects)
+
+# calculate a comparison
+comparison = DirectoryComparison(remote_root, local_root)
+
+# apply the changes in S3
+syncer = S3Syncer(config.DIST_DIR, bucket)
+syncer.sync(comparison)
+
+# flush CloudFront first, as closest to the source
+cloudfront = CloudFrontInvalidator(os.environ['CLOUDFRONT_DISTRIBUTION'],
+                                   'Deploying ' + os.environ['TRAVIS_TAG'])
+cloudfront.invalidate(comparison)
+
+# flush Cloudflare
+cloudflare = CloudflareInvalidator(requests.session(),
+                                   os.environ['CLOUDFLARE_EMAIL'],
+                                   os.environ['CLOUDFLARE_KEY'],
+                                   os.environ['CLOUDFLARE_ZONE'],
+                                   f'https://{config.DOMAIN}/')
+cloudflare.invalidate(comparison)
