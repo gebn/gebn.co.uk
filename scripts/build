@@ -33,19 +33,6 @@ export -f minify_css
 
 echo "Building ${DIST_NAME}..."
 
-# set the modified times on website files to that of the last commit
-# that modified them, which helps identify changes, and ensure the
-# minimum amount is uploaded during deployment
-cd "$WEBSITE_DIR"
-git ls-files | while read file
-do
-    time=$(git log --pretty=format:%cd -n 1 --date=iso -- "$file")
-    time=$(date -u -d "$time" +%Y%m%d%H%M.%S)
-    echo "Changing $file's time to $time"
-    touch -m -t "$time" "$file"
-done
-cd "$WORKING_DIR"
-
 if [[ -d $DIST_DIR ]]; then
     echo "Distribution directory already exists" >&2
     exit 1
