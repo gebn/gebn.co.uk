@@ -57,3 +57,5 @@ cloudflare = CloudflareInvalidator(requests.session(),
                                    os.environ['CLOUDFLARE_ZONE'],
                                    f'https://{config.DOMAIN}/')
 cloudflare.invalidate(comparison)
+
+logger.info(f'Deployed to https://{config.DOMAIN}')
