@@ -16,12 +16,14 @@ logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 logging.getLogger('botocore').setLevel(logging.WARNING)
 
 
+logger.info('Deploying %s to qa', config.DOMAIN)
+
 s3_resource = boto3.resource('s3')
 
-# find the path to the local directory; create a root entity
+# create a local tree representation
 local_root = Root.from_path(config.DIST_DIR)
 
-# get an object representing the bucket; do a listing
+# create a remote tree representation
 bucket = s3_resource.Bucket(config.S3_QA_BUCKET)
 objects = bucket.objects.all()
 remote_root = s3.objects_to_root(objects)

@@ -19,7 +19,8 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 logging.getLogger('botocore').setLevel(logging.WARNING)
 
-# TODO CHANGE RUN CONFIG BEFORE EXECUTING!!!
+
+logger.info('Deploying %s to prod', config.DOMAIN)
 
 s3_resource = boto3.resource('s3')
 
