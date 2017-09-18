@@ -84,6 +84,9 @@ class CloudflareInvalidator(Invalidator):
         paths = itertools.chain(comparison.deleted(), comparison.modified())
         for chunk_ in util.chunk(paths, self._MAX_INVALIDATIONS_PER_REQUEST):
             chunk_ = list(chunk_)
+            if not chunk_:
+                # nothing to do
+                return
             logger.info('Invalidating %d paths (%s)', len(chunk_),
                         ', '.join(chunk_))
             response_ = _request(chunk_)
