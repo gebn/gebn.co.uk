@@ -16,9 +16,9 @@ logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 logging.getLogger('botocore').setLevel(logging.WARNING)
 
 
-logger.info('Deploying %s to qa', config.DOMAIN)
+logger.info(f'Deploying {config.DOMAIN} to qa')
 
-s3_resource = boto3.resource('s3')
+s3_resource = boto3.resource('s3', region_name=config.AWS_REGION)
 
 # create a local tree representation
 local_root = Root.from_path(config.DIST_DIR)
@@ -34,3 +34,6 @@ comparison = DirectoryComparison(remote_root, local_root)
 # action the changes in S3
 syncer = S3Syncer(config.DIST_DIR, bucket)
 syncer.sync(comparison)
+
+logger.info(f'Deployed to http://{config.S3_QA_BUCKET}.s3-website-'
+            f'{config.AWS_REGION}.amazonaws.com')

@@ -9,5 +9,6 @@ TEMP_DIR = pathlib.Path('/dev/shm')
 DIST_NAME = DOMAIN
 DIST_DIR = TEMP_DIR / DIST_NAME
 
+AWS_REGION = 'eu-west-1'
 S3_PROD_BUCKET = DOMAIN
 S3_QA_BUCKET = f'qa.{DOMAIN}'

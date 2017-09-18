@@ -4,12 +4,13 @@ import logging
 
 import boto3
 
+import config
 from invalidate import PrefixInvalidator
 
 
 logger = logging.getLogger(__name__)
 
-_CLIENT = boto3.client('cloudfront')
+_CLIENT = boto3.client('cloudfront', region_name=config.AWS_REGION)
 
 
 class CloudFrontInvalidator(PrefixInvalidator):

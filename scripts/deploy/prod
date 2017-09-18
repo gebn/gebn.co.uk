@@ -22,7 +22,7 @@ logging.getLogger('botocore').setLevel(logging.WARNING)
 
 logger.info('Deploying %s to prod', config.DOMAIN)
 
-s3_resource = boto3.resource('s3')
+s3_resource = boto3.resource('s3', region_name=config.AWS_REGION)
 
 # create a local tree representation
 local_root = Root.from_path(config.DIST_DIR)
