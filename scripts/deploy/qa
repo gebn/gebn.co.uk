@@ -5,12 +5,9 @@ import sys
 import time
 
 import boto3
+import wood
 
 import config
-import s3
-from comparison import DirectoryComparison
-from entities import Root
-from s3 import S3Syncer
 
 logging.Formatter.converter = time.gmtime
 logging.basicConfig(level=logging.INFO,
@@ -27,18 +24,18 @@ logger.info(f'Deploying {config.DOMAIN} to qa')
 s3_resource = boto3.resource('s3', region_name=config.AWS_REGION)
 
 # create a local tree representation
-local_root = Root.from_path(config.DIST_DIR)
+local_root = wood.root(config.DIST_DIR)
 
 # create a remote tree representation
 bucket = s3_resource.Bucket(config.S3_QA_BUCKET)
 objects = bucket.objects.all()
-remote_root = s3.objects_to_root(objects)
+remote_root = wood.s3.objects_to_root(objects)
 
 # calculate a comparison
-comparison = DirectoryComparison(remote_root, local_root)
+comparison = wood.compare(remote_root, local_root)
 
 # action the changes in S3
-syncer = S3Syncer(config.DIST_DIR, bucket)
+syncer = wood.s3.Syncer(config.DIST_DIR, bucket)
 syncer.sync(comparison)
 
 logger.info(f'Deployed to http://{config.S3_QA_BUCKET}.s3-website-'
