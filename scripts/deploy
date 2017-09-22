@@ -1,0 +1,135 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+from typing import List, TypeVar
+import argparse
+import logging
+import os
+import sys
+import time
+import pathlib
+import boto3
+import requests
+import wood
+
+T = TypeVar('T')
+
+PROD = 'prod'
+QA = 'qa'
+
+VALID_ENVIRONMENTS = (PROD, QA)
+
+DOMAIN = os.environ['TRAVIS_REPO_SLUG'].split('/')[1]
+TEMP_DIR = pathlib.Path('/dev/shm')
+DIST_NAME = DOMAIN
+DIST_DIR = TEMP_DIR / DIST_NAME
+
+AWS_REGION = 'eu-west-1'
+S3_PROD_BUCKET = DOMAIN
+S3_QA_BUCKET = f'qa.{DOMAIN}'
+
+PROD_URL = f'https://{DOMAIN}'
+QA_URL = f'http://{S3_QA_BUCKET}.s3-website-{AWS_REGION}.amazonaws.com'
+
+AWS_SESSION = boto3.Session(region_name=AWS_REGION)
+S3_RESOURCE = AWS_SESSION.resource('s3')
+CF_CLIENT = AWS_SESSION.client('cloudfront')
+
+
+logging.Formatter.converter = time.gmtime
+logging.basicConfig(level=logging.INFO,
+                    stream=sys.stdout,
+                    format='%(asctime)s.%(msecs)03d %(name)s %(levelname)-8s '
+                           '%(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
+logging.getLogger('botocore').setLevel(logging.WARNING)
+logger = logging.getLogger(__name__)
+
+
+def _parse_argv(argv: List[str]) -> argparse.Namespace:
+    """
+    Parse command line arguments.
+
+    :param argv: Command line arguments. In this case, there should only be
+                 one: the environment, with value "prod" or "qa".
+    :return: The parsed namespace.
+    """
+    parser = argparse.ArgumentParser('deploy', description=f'Deploys {DOMAIN}')
+    parser.add_argument('environment', choices=VALID_ENVIRONMENTS)
+    return parser.parse_args(argv[1:])
+
+
+def _env_switch(environment: str, prod_value: T, qa_value: T) -> T:
+    """
+    Convenience method for switching between two variables depending on the
+    environment.
+
+    :param environment: The environment identifier.
+    :param prod_value: The value to return if the environment is prod.
+    :param qa_value: The value to return if the environment is not prod
+                     (i.e. QA).
+    :return: `prod_value if environment == 'prod' else qa_value`
+    """
+    if environment == PROD:
+        return prod_value
+    return qa_value
+
+
+def _invalidate_cdns(comparison: wood.comparison.Comparison) -> None:
+    """
+    In the context of a production deployment, invalidate CloudFront followed
+    by Cloudflare.
+
+    :param comparison: A comparison detailing the changes to invalidate.
+    """
+    # first, as closest to the source
+    cloudfront = wood.cloudfront.Invalidator(
+        CF_CLIENT,
+        os.environ['CLOUDFRONT_DISTRIBUTION'],
+        'Deploying ' + os.environ['TRAVIS_TAG'])
+    cloudfront.invalidate(comparison)
+
+    cloudflare = wood.cloudflare.Invalidator(
+        requests.session(), os.environ['CLOUDFLARE_EMAIL'],
+        os.environ['CLOUDFLARE_KEY'], os.environ['CLOUDFLARE_ZONE'],
+        f'https://{DOMAIN}/')
+    cloudflare.invalidate(comparison)
+
+
+def main(argv: List[str]) -> int:
+    """
+    The pseudo-entry point of the script.
+
+    :param argv: Command line arguments.
+    :return: The exit status; 0 on success, >0 on error.
+    """
+    environment = _parse_argv(argv).environment
+
+    logger.info(f'Deploying {DOMAIN} to {environment}')
+
+    # create a local tree representation
+    local_root = wood.root(DIST_DIR)
+
+    # create a remote tree representation
+    bucket = S3_RESOURCE.Bucket(
+        _env_switch(environment, S3_PROD_BUCKET, S3_QA_BUCKET))
+    objects = bucket.objects.all()
+    remote_root = wood.s3.objects_to_root(objects)
+
+    # calculate a comparison
+    comparison = wood.compare(remote_root, local_root)
+
+    # apply the changes in S3
+    syncer = wood.s3.Syncer(DIST_DIR, bucket)
+    syncer.sync(comparison)
+
+    if environment == PROD:
+        _invalidate_cdns(comparison)
+
+    logger.info(f'Deployed to {_env_switch(environment, PROD_URL, QA_URL)}')
+    return 0
+
+
+if __name__ == '__main__':
+    code = main(sys.argv)
+    logger.debug(f'Exiting with code {code}')
+    sys.exit(code)
