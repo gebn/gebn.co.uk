@@ -101,7 +101,7 @@ def main(argv: List[str]) -> int:
     args = _parse_argv(argv)
     qa_domain = f'qa.{args.domain}'
 
-    logger.info(f'Deploying {args.domain} at {args.directory} to ' +
+    logger.info(f'Deploying {args.domain} at {args.build} to ' +
                 args.environment)
 
     # create a local tree representation
