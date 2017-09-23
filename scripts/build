@@ -2,9 +2,9 @@
 
 trap 'exit' ERR
 
-readonly WEBSITE_DIR="$(realpath "$1")"
-readonly BUILD_DIR="$(realpath "$2")"
-readonly BUILD_ARCHIVE="$(realpath "$3")"
+readonly WEBSITE_DIR="$(readlink -f "$1")"
+readonly BUILD_DIR="$(readlink -f "$2")"
+readonly BUILD_ARCHIVE="$(readlink -f "$3")"
 
 function minify_html {
     local file="$1"
