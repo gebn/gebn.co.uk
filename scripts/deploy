@@ -99,7 +99,7 @@ def main(argv: List[str]) -> int:
     The pseudo-entry point of the script.
 
     :param argv: Command line arguments.
-    :return: The exit status; 0 on success, >0 on error.
+    :return: The exit status.
     """
     args = _parse_argv(argv)
 
