@@ -5,6 +5,7 @@ import argparse
 import logging
 import os
 import sys
+import pathlib
 import time
 import boto3
 import requests
@@ -45,7 +46,7 @@ def _parse_argv(argv: List[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser('deploy',
                                      description=f'Deploys a website')
     parser.add_argument('domain', help='The domain of the site being deployed')
-    parser.add_argument('build',
+    parser.add_argument('build', type=pathlib.Path,
                         help='The build directory')
     parser.add_argument('environment', choices=VALID_ENVIRONMENTS,
                         help='The environment to deploy to')
