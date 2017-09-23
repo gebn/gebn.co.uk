@@ -6,7 +6,6 @@ import logging
 import os
 import sys
 import time
-import pathlib
 import boto3
 import requests
 import wood
@@ -19,9 +18,6 @@ QA = 'qa'
 VALID_ENVIRONMENTS = (PROD, QA)
 
 DOMAIN = os.environ['TRAVIS_REPO_SLUG'].split('/')[1]
-TEMP_DIR = pathlib.Path('/dev/shm')
-DIST_NAME = DOMAIN
-DIST_DIR = TEMP_DIR / DIST_NAME
 
 AWS_REGION = 'eu-west-1'
 S3_PROD_BUCKET = DOMAIN
@@ -54,7 +50,10 @@ def _parse_argv(argv: List[str]) -> argparse.Namespace:
     :return: The parsed namespace.
     """
     parser = argparse.ArgumentParser('deploy', description=f'Deploys {DOMAIN}')
-    parser.add_argument('environment', choices=VALID_ENVIRONMENTS)
+    parser.add_argument('build',
+                        help='The build directory')
+    parser.add_argument('environment', choices=VALID_ENVIRONMENTS,
+                        help='The environment to deploy to')
     return parser.parse_args(argv[1:])
 
 
@@ -102,16 +101,16 @@ def main(argv: List[str]) -> int:
     :param argv: Command line arguments.
     :return: The exit status; 0 on success, >0 on error.
     """
-    environment = _parse_argv(argv).environment
+    args = _parse_argv(argv)
 
-    logger.info(f'Deploying {DOMAIN} to {environment}')
+    logger.info(f'Deploying {args.directory} ({DOMAIN}) to {args.environment}')
 
     # create a local tree representation
-    local_root = wood.root(DIST_DIR)
+    local_root = wood.root(args.build)
 
     # create a remote tree representation
     bucket = S3_RESOURCE.Bucket(
-        _env_switch(environment, S3_PROD_BUCKET, S3_QA_BUCKET))
+        _env_switch(args.environment, S3_PROD_BUCKET, S3_QA_BUCKET))
     objects = bucket.objects.all()
     remote_root = wood.s3.objects_to_root(objects)
 
@@ -119,13 +118,14 @@ def main(argv: List[str]) -> int:
     comparison = wood.compare(remote_root, local_root)
 
     # apply the changes in S3
-    syncer = wood.s3.Syncer(DIST_DIR, bucket)
+    syncer = wood.s3.Syncer(args.build, bucket)
     syncer.sync(comparison)
 
-    if environment == PROD:
+    if args.environment == PROD:
         _invalidate_cdns(comparison)
 
-    logger.info(f'Deployed to {_env_switch(environment, PROD_URL, QA_URL)}')
+    url = _env_switch(args.environment, PROD_URL, QA_URL)
+    logger.info(f'Deployed to {url}')
     return 0
 
 

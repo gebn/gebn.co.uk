@@ -1,9 +1,0 @@
-#!/bin/bash
-
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-readonly DOMAIN="gebn.co.uk"
-readonly WEBSITE_DIR="$SCRIPT_DIR/../website"
-readonly TEMP_DIR="/dev/shm"
-readonly DIST_NAME="$DOMAIN"
-readonly DIST_DIR="$TEMP_DIR/$DIST_NAME"
-readonly DIST_ARCHIVE="${DIST_DIR}.tar.gz"  # must match .travis.ci

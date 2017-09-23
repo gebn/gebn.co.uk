@@ -2,9 +2,9 @@
 
 trap 'exit' ERR
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-readonly WORKING_DIR="$PWD"
-source "$SCRIPT_DIR/variables"
+readonly WEBSITE_DIR="$(realpath "$1")"
+readonly BUILD_DIR="$(realpath "$2")"
+readonly BUILD_ARCHIVE="$(realpath "$3")"
 
 function minify_html {
     local file="$1"
@@ -31,24 +31,30 @@ function minify_css {
 export -f minify_css
 
 
-echo "Building ${DIST_NAME}..."
-
-if [[ -d $DIST_DIR ]]; then
-    echo "Distribution directory already exists" >&2
+if [[ -d $BUILD_DIR ]]; then
+    echo "Build directory already exists" >&2
     exit 1
 fi
 
-mkdir "$DIST_DIR"
+if [[ -f $BUILD_ARCHIVE ]]; then
+    echo "Build archive already exists" >&2
+    exit 2
+fi
+
+echo "Building $WEBSITE_DIR..."
+
+mkdir "$BUILD_DIR"
 
 # create the directory that could be deployed
-rsync -a --exclude '*.psd' --prune-empty-dirs "$WEBSITE_DIR/" "$DIST_DIR"
+rsync -a --exclude '*.psd' --prune-empty-dirs "$WEBSITE_DIR/" "$BUILD_DIR"
 
 # minify
-find "$DIST_DIR" -type f -name '*.html' -o -name '*.xhtml' -exec bash -c 'minify_html "$0"' {} \;
-find "$DIST_DIR" -type f -name '*.css' -exec bash -c 'minify_css "$0"' {} \;
+find "$BUILD_DIR" -type f \( -name '*.html' -o -name '*.xhtml' \) \
+    -exec bash -c 'minify_html "$0"' {} \;
+find "$BUILD_DIR" -type f -name '*.css' -exec bash -c 'minify_css "$0"' {} \;
 
-echo "Distribution created in $DIST_DIR"
+echo "Distribution created in $BUILD_DIR"
 
 # create a distribution archive for GitHub in case we're building a tag
-GZIP=-9 tar -czf "$DIST_ARCHIVE" -C "$WEBSITE_DIR" .
-echo "Distribution archive created at $DIST_ARCHIVE"
+GZIP=-9 tar -czf "$BUILD_ARCHIVE" -C "$WEBSITE_DIR" .
+echo "Distribution archive created at $BUILD_ARCHIVE"

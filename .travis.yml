@@ -5,16 +5,16 @@ python: 3.6
 before_script:
 - npm install -g html-minifier clean-css-cli
 script:
-- ./scripts/build
+- ./scripts/build website /dev/shm/gebn.co.uk /dev/shm/gebn.co.uk.tar.gz
 deploy:
 - provider: script
-  script: ./scripts/deploy qa
+  script: ./scripts/deploy /dev/shm/gebn.co.uk qa
   skip_cleanup: true
   on:
     repo: gebn/gebn.co.uk
     branch: qa
 - provider: script
-  script: ./scripts/deploy prod
+  script: ./scripts/deploy /dev/shm/gebn.co.uk prod
   skip_cleanup: true
   on:
     tags: true
