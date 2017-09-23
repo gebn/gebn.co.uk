@@ -17,14 +17,7 @@ QA = 'qa'
 
 VALID_ENVIRONMENTS = (PROD, QA)
 
-DOMAIN = os.environ['TRAVIS_REPO_SLUG'].split('/')[1]
-
 AWS_REGION = 'eu-west-1'
-S3_PROD_BUCKET = DOMAIN
-S3_QA_BUCKET = f'qa.{DOMAIN}'
-
-PROD_URL = f'https://{DOMAIN}'
-QA_URL = f'http://{S3_QA_BUCKET}.s3-website-{AWS_REGION}.amazonaws.com'
 
 AWS_SESSION = boto3.Session(region_name=AWS_REGION)
 S3_RESOURCE = AWS_SESSION.resource('s3')
@@ -49,7 +42,9 @@ def _parse_argv(argv: List[str]) -> argparse.Namespace:
                  one: the environment, with value "prod" or "qa".
     :return: The parsed namespace.
     """
-    parser = argparse.ArgumentParser('deploy', description=f'Deploys {DOMAIN}')
+    parser = argparse.ArgumentParser('deploy',
+                                     description=f'Deploys a website')
+    parser.add_argument('domain', help='The domain of the site being deployed')
     parser.add_argument('build',
                         help='The build directory')
     parser.add_argument('environment', choices=VALID_ENVIRONMENTS,
@@ -73,12 +68,14 @@ def _env_switch(environment: str, prod_value: T, qa_value: T) -> T:
     return qa_value
 
 
-def _invalidate_cdns(comparison: wood.comparison.Comparison) -> None:
+def _invalidate_cdns(comparison: wood.comparison.Comparison, domain: str) \
+        -> None:
     """
     In the context of a production deployment, invalidate CloudFront followed
     by Cloudflare.
 
     :param comparison: A comparison detailing the changes to invalidate.
+    :param domain: The production domain name.
     """
     # first, as closest to the source
     cloudfront = wood.cloudfront.Invalidator(
@@ -90,7 +87,7 @@ def _invalidate_cdns(comparison: wood.comparison.Comparison) -> None:
     cloudflare = wood.cloudflare.Invalidator(
         requests.session(), os.environ['CLOUDFLARE_EMAIL'],
         os.environ['CLOUDFLARE_KEY'], os.environ['CLOUDFLARE_ZONE'],
-        f'https://{DOMAIN}/')
+        f'https://{domain}/')
     cloudflare.invalidate(comparison)
 
 
@@ -102,15 +99,17 @@ def main(argv: List[str]) -> int:
     :return: The exit status.
     """
     args = _parse_argv(argv)
+    qa_domain = f'qa.{args.domain}'
 
-    logger.info(f'Deploying {args.directory} ({DOMAIN}) to {args.environment}')
+    logger.info(f'Deploying {args.domain} at {args.directory} to ' +
+                args.environment)
 
     # create a local tree representation
     local_root = wood.root(args.build)
 
     # create a remote tree representation
     bucket = S3_RESOURCE.Bucket(
-        _env_switch(args.environment, S3_PROD_BUCKET, S3_QA_BUCKET))
+        _env_switch(args.environment, args.domain, qa_domain))
     objects = bucket.objects.all()
     remote_root = wood.s3.objects_to_root(objects)
 
@@ -122,9 +121,11 @@ def main(argv: List[str]) -> int:
     syncer.sync(comparison)
 
     if args.environment == PROD:
-        _invalidate_cdns(comparison)
+        _invalidate_cdns(comparison, args.domain)
+        url = f'https://{args.domain}'
+    else:
+        url = f'http://{qa_domain}.s3-website-{AWS_REGION}.amazonaws.com'
 
-    url = _env_switch(args.environment, PROD_URL, QA_URL)
     logger.info(f'Deployed to {url}')
     return 0
 
